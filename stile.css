@@ -1,0 +1,102 @@
+body {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    background-color: #f4f7f6;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.calendar-container {
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 30px;
+    text-align: center;
+}
+
+.ui-datepicker {
+    margin: 20px auto;
+}
+
+.ui-datepicker-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.ui-datepicker-title {
+    width: 100%;
+    text-align: center;
+}
+
+.ui-datepicker-month {
+    font-weight: bold; /* Mese in grassetto */
+}
+
+.ui-datepicker-prev, .ui-datepicker-next {
+    margin: 0 10px; /* Aggiungi margine per distanziare i pulsanti */
+}
+
+.ui-datepicker td.selected a {
+    background-color: #007bff !important; /* Colore blu per i giorni selezionati */
+    color: white !important;
+    border-radius: 50%;
+    transition: background-color 0.3s ease;
+}
+
+.ui-datepicker td.deselected a {
+    background-color: #d3d3d3 !important; /* Colore grigio per i giorni deselezionati */
+    color: black !important;
+}
+
+#resetButton, #submitButton {
+    margin-top: 20px;
+    padding: 10px 20px;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+#resetButton {
+    background-color: #ff4444;
+    margin-right: 10px;
+}
+
+#resetButton:hover {
+    background-color: #cc0000;
+}
+
+#submitButton {
+    background-color: #28a745;
+}
+
+#submitButton:hover {
+    background-color: #218838;
+}
+
+#availabilityText {
+    margin-top: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #333333;
+}
+
+.title {
+    font-weight: bold;
+    font-size: 24px;
+    text-transform: uppercase;
+    color: #007bff;
+}
+
+.subtitle {
+    font-size: 14px;
+    margin-top: 5px;
+    text-transform: uppercase; /* Modifica qui per rendere il testo tutto in maiuscolo */
+    color: #6c757d;
+} 
