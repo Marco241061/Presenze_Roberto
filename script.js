@@ -70,8 +70,30 @@ $(function() {
     });
 
     // Gestione del pulsante Invia
-    $("#submitButton").click(function() {
-        const mailtoLink = `mailto:marcocecconi1@alice.it?subject=Date%20Disponibili&body=Giorni%20selezionati:%20${encodeURIComponent(JSON.stringify(selectedDates))}`;
+    $("#submitButton").click(async function() {
+        const email = "marcocecconi1@alice.it"; // Sostituisci con l'email dell'utente
+        const mailtoLink = `mailto:${email}?subject=Date%20Disponibili&body=Giorni%20selezionati:%20${encodeURIComponent(JSON.stringify(selectedDates))}`;
+        
+        // Invia i dati al backend
+        await fetch('http://localhost:5000/api/dates', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ email, selectedDates })
+        });
+
         window.location.href = mailtoLink;
     });
+
+    // Carica le date dal backend quando la pagina viene caricata
+    const email = "marcocecconi1@alice.it"; // Sostituisci con l'email dell'utente
+    fetch(`http://localhost:5000/api/dates/${email}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data && data.selectedDates) {
+                selectedDates = data.selectedDates;
+                updateCalendar();
+            }
+        });
 }); 
