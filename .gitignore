@@ -1,0 +1,25 @@
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Logs
+logs/
+*.log
+
+# Directory di build
+dist/
+build/
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+
+# Configurazione dell'ambiente
+.env
+
+# Editor di codice
+.idea/
+.vscode/
+*.swp
