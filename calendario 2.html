@@ -60,7 +60,7 @@
             color: black !important;
         }
 
-        #resetButton, #submitButton {
+        #resetButton, #saveButton {
             margin-top: 20px;
             padding: 10px 20px;
             color: white;
@@ -81,11 +81,11 @@
             background-color: #cc0000;
         }
 
-        #submitButton {
+        #saveButton {
             background-color: #28a745;
         }
 
-        #submitButton:hover {
+        #saveButton:hover {
             background-color: #218838;
         }
 
@@ -118,7 +118,7 @@
         <div id="datepicker"></div>
         <div>
             <button id="resetButton">Reset</button>
-            <button id="submitButton">Invia</button>
+            <button id="saveButton">Salva</button>
         </div>
         <div id="availabilityText">Evidenzia giorni disponibile</div>
     </div>
@@ -126,6 +126,63 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-i18n/1.12.1/jquery-ui-i18n.js"></script>
-    <script src="script.js"></script>
+    <script>
+        $(function() {
+            // Carica i giorni selezionati dal localStorage
+            var selectedDates = JSON.parse(localStorage.getItem('selectedDates')) || {};
+
+            // Imposta il datepicker
+            $("#datepicker").datepicker({
+                onSelect: function(dateText) {
+                    var selectedDate = $(this).datepicker('getDate');
+                    var dateString = $.datepicker.formatDate('yy-mm-dd', selectedDate);
+                    
+                    if (selectedDates[dateString]) {
+                        delete selectedDates[dateString];
+                    } else {
+                        selectedDates[dateString] = true;
+                    }
+
+                    updateCalendar();
+                },
+                beforeShowDay: function(date) {
+                    var dateString = $.datepicker.formatDate('yy-mm-dd', date);
+                    if (selectedDates[dateString]) {
+                        return [true, 'selected'];
+                    } else {
+                        return [true, ''];
+                    }
+                }
+            });
+
+            function updateCalendar() {
+                $("#datepicker").find('.ui-datepicker-calendar td a').each(function() {
+                    var date = $(this).data('date');
+                    var dateString = $.datepicker.formatDate('yy-mm-dd', new Date(date));
+                    if (selectedDates[dateString]) {
+                        $(this).addClass('ui-state-active');
+                    } else {
+                        $(this).removeClass('ui-state-active');
+                    }
+                });
+            }
+
+            // Aggiorna il calendario con i giorni selezionati
+            updateCalendar();
+
+            // Gestisci il clic sul pulsante "Salva"
+            $("#saveButton").on("click", function() {
+                localStorage.setItem('selectedDates', JSON.stringify(selectedDates));
+                alert("Le modifiche sono state salvate automaticamente!");
+            });
+
+            // Gestisci il clic sul pulsante "Reset"
+            $("#resetButton").on("click", function() {
+                localStorage.removeItem('selectedDates');
+                selectedDates = {};
+                updateCalendar();
+            });
+        });
+    </script>
 </body>
 </html>
